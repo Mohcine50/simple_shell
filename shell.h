@@ -1,9 +1,10 @@
 #ifndef SHELL_H_
 #define SHELL_H_
 
-#include <stdio.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 #include <sys/wait.h>
+#include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
@@ -25,4 +26,8 @@ envList_t *add_node_end(envList_t **head, const char *str);
 
 int _setenv(const char *name, const char *value, int overwrite);
 int _unsetenv(const char *name);
+
+int _which(char *dir);
+void print_env(char **env);
+void prompt(char *shell_name, char **env);
 #endif

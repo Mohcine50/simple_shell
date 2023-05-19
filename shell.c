@@ -92,40 +92,6 @@ envList_t *add_node_end(envList_t **head, const char *str)
             temp = temp->next;
         temp->next = new_node;
     }
+    free(new_node);
     return (new_node);
-}
-
-/**
- * print path linked list
- */
-
-size_t print_list(const envList_t *h)
-{
-    size_t i = 0;
-
-    while (h)
-    {
-        if (h->value == NULL)
-        {
-            printf("[0] (nil)\n");
-        }
-        else
-            printf("%s\n", h->value);
-        h = h->next;
-        i++;
-    }
-    return (i);
-}
-
-/**
- *  function that changes or adds an environment variable
- */
-int _setenv(const char *name, const char *value, int overwrite)
-{
-}
-/**
- *  function that deletes the variable name from the environment
- */
-int _unsetenv(const char *name)
-{
 }
