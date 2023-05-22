@@ -36,6 +36,7 @@ void prompt(char *shell_name, char **env)
             }
             i++;
         }
+
         token = split_string(input, " \t\n");
         if (_which(token[0]) == 0)
         {
