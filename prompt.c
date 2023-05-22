@@ -37,14 +37,19 @@ void prompt(char *shell_name, char **env)
             i++;
         }
         token = split_string(input, " \t\n");
-        command = malloc(sizeof("/bin/") + sizeof(token[0]) + 2);
-        sprintf(command, "%s/%s", "/bin/", token[0]);
-        check_command = _which(command);
-
-        if (check_command == -1)
+        if (_which(token[0]) == 0)
         {
-            printf("Command not found\n");
-            exit(EXIT_FAILURE);
+            command = token[0];
+        }
+        else
+        {
+            command = malloc(sizeof("/bin/") + sizeof(token[0]) + 2);
+            sprintf(command, "%s/%s", "/bin/", token[0]);
+            check_command = _which(command);
+            if (check_command == -1)
+            {
+                printf("Command not found\n");
+            }
         }
 
         fork_pid = fork();
