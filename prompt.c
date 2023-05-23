@@ -2,7 +2,7 @@
 
 void prompt(char *shell_name, char **env)
 {
-    char *input;
+    char *input = NULL;
     size_t n = 0;
     int status, i = 0, check_command;
     ssize_t get_line;
@@ -26,6 +26,10 @@ void prompt(char *shell_name, char **env)
         {
             free(input);
             exit(EXIT_SUCCESS);
+        }
+        if (strcmp(input, "\n") == 0)
+        {
+            continue;
         }
 
         while (input[i])
