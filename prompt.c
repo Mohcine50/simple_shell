@@ -4,7 +4,7 @@ void prompt(char **env)
 {
     char *input = NULL;
     size_t n = 0;
-    int status, i = 0, check_command;
+    int status, i = 0, check_command, exit_code;
     ssize_t get_line;
     char **token;
     pid_t fork_pid;
@@ -68,10 +68,10 @@ void prompt(char **env)
         }
         if (fork_pid == 0)
         {
-
-            if (execve(command, token, env) == -1)
+            exit_code = execve(command, token, env);
+            if (exit_code == -1)
             {
-                perror("Error");
+                _exit(exit_code);
                 /* exit(EXIT_FAILURE) */;
             }
         }
