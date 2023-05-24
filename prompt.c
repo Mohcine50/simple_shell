@@ -1,6 +1,6 @@
 #include "shell.h"
 
-void prompt(char *shell_name, char **env)
+void prompt(char **env)
 {
     char *input = NULL;
     size_t n = 0;
@@ -13,7 +13,7 @@ void prompt(char *shell_name, char **env)
     while (1)
     {
         if (isatty(STDIN_FILENO))
-            printf("%s$ ", shell_name);
+            printf("#cisfun$ ");
         get_line = getline(&input, &n, stdin);
 
         if (get_line == -1)
