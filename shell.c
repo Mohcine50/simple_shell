@@ -95,3 +95,16 @@ envList_t *add_node_end(envList_t **head, const char *str)
     free(new_node);
     return (new_node);
 }
+
+int containsOnlySpaces(const char *str)
+{
+    int i = 0;
+    while (str[i] != '\0')
+    {
+        if (str[i++] != ' ')
+        {
+            return (-1);
+        }
+    }
+    return (0);
+}
