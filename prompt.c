@@ -19,13 +19,13 @@ void prompt(char **env)
         if (get_line == -1)
         {
             free(input);
-            exit(127);
+            exit(0);
         }
 
         if (strcmp(input, "exit\n") == 0)
         {
             free(input);
-            exit(127);
+            exit(0);
         }
         if (strcmp(input, "\n") == 0)
         {
@@ -41,7 +41,7 @@ void prompt(char **env)
             i++;
         }
 
-        token = split_string(input, " \t\n\r");
+        token = split_string(input, " \t\n");
         if (_which(token[0]) == 0)
         {
             command = token[0];
@@ -53,34 +53,31 @@ void prompt(char **env)
             check_command = _which(command);
             if (check_command == -1)
             {
-
                 printf("%s: Command not found\n", token[0]);
             }
-            else
+        }
+
+        fork_pid = fork();
+
+        if (fork_pid == -1)
+        {
+            free(input);
+            free(token);
+            perror("fork");
+            exit(127);
+        }
+        if (fork_pid == 0)
+        {
+
+            if (execve(command, token, env) == -1)
             {
-                fork_pid = fork();
-
-                if (fork_pid == -1)
-                {
-                    free(input);
-                    free(token);
-                    perror("fork");
-                    exit(127);
-                }
-                if (fork_pid == 0)
-                {
-
-                    if (execve(command, token, env) == -1)
-                    {
-                        perror("Error");
-                        /* exit(EXIT_FAILURE) */;
-                    }
-                }
-                else
-                {
-                    wait(&status);
-                }
+                perror("Error");
+                /* exit(EXIT_FAILURE) */;
             }
+        }
+        else
+        {
+            wait(&status);
         }
     }
 

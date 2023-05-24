@@ -30,4 +30,5 @@ int containsOnlySpaces(const char *str);
 int _which(char *dir);
 void print_env(char **env);
 void prompt(char **env);
+
 #endif
