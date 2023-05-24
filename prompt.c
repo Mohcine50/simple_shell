@@ -41,7 +41,7 @@ void prompt(char **env)
             i++;
         }
 
-        token = split_string(input, " \t\n");
+        token = split_string(input, " \t\n\r");
         if (_which(token[0]) == 0)
         {
             command = token[0];
