@@ -13,22 +13,29 @@ void prompt(char **env)
     while (1)
     {
         if (isatty(STDIN_FILENO))
-            printf("#cisfun$ ");
+            write(STDERR_FILENO, "csisfun$ ", 2);
         get_line = getline(&input, &n, stdin);
 
         if (get_line == -1)
         {
+            free(command);
             free(input);
+            free(token);
             exit(0);
         }
 
         if (strcmp(input, "exit\n") == 0)
         {
+            free(command);
             free(input);
+            free(token);
             exit(0);
         }
         if (strcmp(input, "\n") == 0)
         {
+            free(command);
+            free(input);
+            free(token);
             continue;
         }
 
@@ -54,6 +61,9 @@ void prompt(char **env)
             if (check_command == -1)
             {
                 printf("%s: Command not found\n", token[0]);
+                free(command);
+                free(input);
+                free(token);
             }
         }
 
@@ -61,9 +71,9 @@ void prompt(char **env)
 
         if (fork_pid == -1)
         {
+            free(command);
             free(input);
             free(token);
-            perror("fork");
             exit(127);
         }
         if (fork_pid == 0)
@@ -73,14 +83,22 @@ void prompt(char **env)
             {
                 _exit(exit_code);
                 /* exit(EXIT_FAILURE) */;
+                free(command);
+                free(input);
+                free(token);
             }
         }
         else
         {
             wait(&status);
+            free(command);
+            free(input);
+            free(token);
+            command = NULL;
+            token = NULL;
         }
     }
-
+    free(command);
     free(input);
     free(token);
 }
