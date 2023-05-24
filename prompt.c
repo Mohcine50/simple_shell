@@ -27,7 +27,7 @@ void prompt(char **env)
             free(input);
             exit(EXIT_SUCCESS);
         }
-        if (strcmp(input, "\n") == 0 || containsOnlySpaces(input) == -1)
+        if (strcmp(input, "\n") == 0)
         {
             continue;
         }
