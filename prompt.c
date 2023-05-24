@@ -19,7 +19,7 @@ void prompt(char **env)
         if (get_line == -1)
         {
             free(input);
-            exit(EXIT_FAILURE);
+            exit(127);
         }
 
         if (strcmp(input, "exit\n") == 0)
@@ -65,7 +65,7 @@ void prompt(char **env)
                     free(input);
                     free(token);
                     perror("fork");
-                    exit(EXIT_FAILURE);
+                    exit(127);
                 }
                 if (fork_pid == 0)
                 {
