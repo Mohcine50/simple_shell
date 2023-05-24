@@ -62,6 +62,8 @@ void prompt(char **env)
 
                 if (fork_pid == -1)
                 {
+                    free(input);
+                    free(token);
                     perror("fork");
                     exit(EXIT_FAILURE);
                 }
