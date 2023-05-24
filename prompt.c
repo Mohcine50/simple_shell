@@ -25,7 +25,7 @@ void prompt(char **env)
         if (strcmp(input, "exit\n") == 0)
         {
             free(input);
-            exit(EXIT_SUCCESS);
+            exit(127);
         }
         if (strcmp(input, "\n") == 0)
         {
