@@ -1,8 +1,5 @@
 #include "shell.h"
 
-/* Extern Enveriment Variable */
-/* extern char **environ; */
-
 int main(int ac, char **env)
 {
 

@@ -49,33 +49,36 @@ void prompt(char **env)
         else
         {
             command = malloc(sizeof("/bin/") + sizeof(token[0]) + 2);
-            sprintf(command, "%s/%s", "/bin/", token[0]);
+            sprintf(command, "%s/%s", "/bin", token[0]);
             check_command = _which(command);
             if (check_command == -1)
             {
-                printf("Command not found\n");
+
+                printf("%s: Command not found\n", token[0]);
             }
-        }
-
-        fork_pid = fork();
-
-        if (fork_pid == -1)
-        {
-            perror("fork");
-            exit(EXIT_FAILURE);
-        }
-        if (fork_pid == 0)
-        {
-
-            if (execve(command, token, env) == -1)
+            else
             {
-                perror("Error:");
-                exit(EXIT_FAILURE);
+                fork_pid = fork();
+
+                if (fork_pid == -1)
+                {
+                    perror("fork");
+                    exit(EXIT_FAILURE);
+                }
+                if (fork_pid == 0)
+                {
+
+                    if (execve(command, token, env) == -1)
+                    {
+                        perror("Error");
+                        /* exit(EXIT_FAILURE) */;
+                    }
+                }
+                else
+                {
+                    wait(&status);
+                }
             }
-        }
-        else
-        {
-            wait(&status);
         }
     }
 
