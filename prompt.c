@@ -23,6 +23,12 @@ void prompt(char **env)
             free(token);
             exit(0);
         }
+        if (get_line == 0)
+        {
+            if (isatty(STDIN_FILENO))
+                write(STDERR_FILENO, "\n", 1);
+            exit(1);
+        }
 
         if (strcmp(input, "exit\n") == 0)
         {
@@ -36,7 +42,7 @@ void prompt(char **env)
             free(command);
             free(input);
             free(token);
-            continue;
+            write(STDERR_FILENO, "\n", 1);
         }
 
         while (input[i])
@@ -61,9 +67,6 @@ void prompt(char **env)
             if (check_command == -1)
             {
                 printf("%s: Command not found\n", token[0]);
-                free(command);
-                free(input);
-                free(token);
             }
         }
 
@@ -74,19 +77,16 @@ void prompt(char **env)
             free(command);
             free(input);
             free(token);
-            exit(127);
+            exit(-1);
         }
         if (fork_pid == 0)
         {
             exit_code = execve(command, token, env);
-            if (exit_code == -1)
-            {
-                _exit(exit_code);
-                /* exit(EXIT_FAILURE) */;
-                free(command);
-                free(input);
-                free(token);
-            }
+
+            free(command);
+            free(input);
+            free(token);
+            _exit(exit_code);
         }
         else
         {
@@ -98,7 +98,4 @@ void prompt(char **env)
             token = NULL;
         }
     }
-    free(command);
-    free(input);
-    free(token);
 }
