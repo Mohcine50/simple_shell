@@ -35,3 +35,21 @@ int _atoi(char *c)
     }
     return (number * sign);
 }
+
+char **split_string(char *str, const char *delim)
+{
+    char **words;
+    char *token;
+    int i = 0;
+
+    token = strtok(str, delim);
+    words = malloc(sizeof(char *) * 1024);
+    while (token != NULL)
+    {
+        words[i] = token;
+        token = strtok(NULL, delim);
+        i++;
+    }
+    words[i] = NULL;
+    return (words);
+}

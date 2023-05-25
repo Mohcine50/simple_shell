@@ -1,24 +1,5 @@
 #include "shell.h"
 
-/* ? advanced: Write the function without strtok */
-char **split_string(char *str, const char *delim)
-{
-    char **words;
-    char *token;
-    int i = 0;
-
-    token = strtok(str, delim);
-    words = malloc(sizeof(char *) * 1024);
-    while (token != NULL)
-    {
-        words[i] = token;
-        token = strtok(NULL, delim);
-        i++;
-    }
-    words[i] = NULL;
-    return (words);
-}
-
 /**
  * _getenv - get a
  */
@@ -39,19 +20,6 @@ char *_getenv(const char *name)
         i++;
     }
     return (NULL);
-}
-
-int containsOnlySpaces(const char *str)
-{
-    int i = 0;
-    while (str[i] != '\0')
-    {
-        if (str[i++] != ' ')
-        {
-            return (-1);
-        }
-    }
-    return (0);
 }
 
 char *handle_command(char *com)
