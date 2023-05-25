@@ -12,6 +12,8 @@
 /**
  * description: struct for path env variables
  */
+
+extern char **environ;
 typedef struct env_s
 {
     char *value;
@@ -27,8 +29,6 @@ envList_t *add_node_end(envList_t **head, const char *str);
 int _setenv(const char *name, const char *value, int overwrite);
 int _unsetenv(const char *name);
 int containsOnlySpaces(const char *str);
-int _which(char *dir);
 void print_env(char **env);
-void prompt(char **env);
 char *handle_command(char *com);
 #endif

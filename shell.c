@@ -3,14 +3,15 @@
 /* ? advanced: Write the function without strtok */
 char **split_string(char *str, const char *delim)
 {
-    char **words = NULL;
-    char *token = strtok(str, delim);
+    char **words;
+    char *token;
     int i = 0;
 
+    token = strtok(str, delim);
+    words = malloc(sizeof(char *) * 1024);
     while (token != NULL)
     {
-        words = realloc(words, (i + 1) * sizeof(char *));
-        words[i] = strdup(token);
+        words[i] = token;
         token = strtok(NULL, delim);
         i++;
     }
@@ -21,20 +22,21 @@ char **split_string(char *str, const char *delim)
 /**
  * _getenv - get a
  */
-extern char **environ;
 char *_getenv(const char *name)
 {
-    char **variables = environ;
-    char **variable_values;
+    int i = 0;
+    char *splited_env;
+    char *env_value;
 
-    while (*variables != NULL)
+    while (environ[i])
     {
-        if (strstr(*variables, name) != NULL)
+        splited_env = strtok(environ[i], "=");
+        if (strcmp(splited_env, name) == 0)
         {
-            variable_values = split_string(*variables, "=");
-            return (variable_values[1]);
+            env_value = strtok(NULL, "=");
+            return (env_value);
         }
-        variables++;
+        i++;
     }
     return (NULL);
 }
@@ -111,22 +113,29 @@ int containsOnlySpaces(const char *str)
 
 char *handle_command(char *com)
 {
-    char *command = NULL;
-    int check_command;
+    char *PATH;
+    char *command;
+    char *token;
+    struct stat _stat;
 
-    if (_which(com) == 0)
-    {
+    PATH = _getenv("PATH");
+    token = strtok(PATH, ":");
+
+    if (stat(com, &_stat) == 0)
         return (com);
-    }
-    else
+
+    while (token)
     {
-        command = malloc(sizeof("/bin/") + sizeof(com) + 2);
-        sprintf(command, "%s/%s", "/bin", com);
-        check_command = _which(command);
-        if (check_command == 0)
-        {
+        command = malloc(strlen(token) + strlen(com) + 2);
+
+        strcpy(command, token);
+        strcat(command, "/");
+        strcat(command, com);
+        if (stat(command, &_stat) == 0)
             return (command);
-        }
+
+        free(command);
+        token = strtok(NULL, ":");
     }
 
     return (NULL);

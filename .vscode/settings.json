@@ -2,6 +2,7 @@
 	"files.associations": {
 		"*.embeddedhtml": "html",
 		"unistd.h": "c",
-		"print_list": "cpp"
+		"print_list": "cpp",
+		"type_traits": "c"
 	}
 }
