@@ -15,4 +15,8 @@ char **split_string(char *str, const char *delim);
 char *_getenv(const char *name);
 int containsOnlySpaces(const char *str);
 char *handle_command(char *com);
+void print_shell(char *text, int length);
+void shell_exit(char *command, char *input, char **tokens);
+void _execve(char **argv, char *command);
+int _atoi(char *c);
 #endif

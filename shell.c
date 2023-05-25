@@ -83,3 +83,34 @@ char *handle_command(char *com)
 
     return (NULL);
 }
+
+void print_shell(char *text, int length)
+{
+    if (isatty(STDIN_FILENO))
+        write(STDERR_FILENO, text, length);
+}
+
+void shell_exit(char *command, char *input, char **tokens)
+{
+    int num_exit = 0;
+
+    if (tokens[1])
+        num_exit = _atoi(tokens[1]);
+
+    free(command);
+    free(input);
+    free(tokens);
+    exit(num_exit);
+}
+
+void _execve(char **argv, char *command)
+{
+
+    if (command)
+        execve(command, argv, environ);
+    else
+        perror("error");
+
+    free(argv);
+    exit(0);
+}
