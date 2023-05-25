@@ -4,7 +4,7 @@ void prompt(char **env)
 {
     char *input = NULL;
     size_t n = 0;
-    int status, i = 0, exit_code;
+    int status, exit_code;
     ssize_t get_line;
     char **token;
     pid_t fork_pid;
