@@ -17,6 +17,6 @@ char *_getenv(const char *name);
 char *handle_command(char *com);
 void print_shell(char *text, int length);
 void shell_exit(char *command, char *input, char **argv);
-void _execve(char **argv, char *command);
+void _execve(char **argv);
 int _atoi(char *c);
 #endif

@@ -71,8 +71,9 @@ void shell_exit(char *command, char *input, char **argv)
     exit(num_exit);
 }
 
-void _execve(char **argv, char *command)
+void _execve(char **argv)
 {
+    char *command = handle_command(argv[0]);
     if (command)
         execve(command, argv, environ);
     else

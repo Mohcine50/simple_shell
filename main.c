@@ -23,9 +23,9 @@ int main(void)
 			print_shell("\n", 1), exit(1);
 
 		argv = split_string(input, " \t\n");
-		command = handle_command(argv[0]);
 		if (argv[0] && strcmp(argv[0], "exit") == 0)
 			shell_exit(command, input, argv);
+
 		fork_pid = fork();
 		if (fork_pid == -1)
 		{
@@ -33,7 +33,7 @@ int main(void)
 			return (1);
 		}
 		if (fork_pid == 0)
-			_execve(argv, command);
+			_execve(argv);
 		else
 			wait(&status);
 		free(command);
