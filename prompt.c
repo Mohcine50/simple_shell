@@ -72,17 +72,9 @@ void prompt(char **env)
 
         fork_pid = fork();
 
-        if (fork_pid == -1)
-        {
-            free(command);
-            free(input);
-            free(token);
-            exit(-1);
-        }
         if (fork_pid == 0)
         {
             exit_code = execve(command, token, env);
-
             free(command);
             free(input);
             free(token);
