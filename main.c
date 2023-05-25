@@ -21,8 +21,9 @@ int main(void)
 		}
 		if (_getline == 0)
 			print_shell("\n", 1), exit(1);
-		argv = split_string(input, " \t\n");
 
+		argv = split_string(input, " \t\n");
+		command = handle_command(argv[0]);
 		if (argv[0] && strcmp(argv[0], "exit") == 0)
 			shell_exit(command, input, argv);
 		fork_pid = fork();
@@ -37,7 +38,6 @@ int main(void)
 			wait(&status);
 		free(command);
 		free(argv);
-		free(input);
 		command = NULL;
 		argv = NULL;
 	}

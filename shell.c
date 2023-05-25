@@ -34,20 +34,20 @@ char *handle_command(char *com)
 
     if (stat(com, &_stat) == 0)
         return (com);
+    else
+        while (token)
+        {
+            command = malloc(strlen(token) + strlen(com) + 2);
 
-    while (token)
-    {
-        command = malloc(strlen(token) + strlen(com) + 2);
+            strcpy(command, token);
+            strcat(command, "/");
+            strcat(command, com);
+            if (stat(command, &_stat) == 0)
+                return (command);
 
-        strcpy(command, token);
-        strcat(command, "/");
-        strcat(command, com);
-        if (stat(command, &_stat) == 0)
-            return (command);
-
-        free(command);
-        token = strtok(NULL, ":");
-    }
+            free(command);
+            token = strtok(NULL, ":");
+        }
 
     return (NULL);
 }
@@ -73,7 +73,6 @@ void shell_exit(char *command, char *input, char **argv)
 
 void _execve(char **argv, char *command)
 {
-
     if (command)
         execve(command, argv, environ);
     else

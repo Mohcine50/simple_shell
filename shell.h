@@ -14,7 +14,6 @@ extern char **environ;
 
 char **split_string(char *str, const char *delim);
 char *_getenv(const char *name);
-int containsOnlySpaces(const char *str);
 char *handle_command(char *com);
 void print_shell(char *text, int length);
 void shell_exit(char *command, char *input, char **argv);
