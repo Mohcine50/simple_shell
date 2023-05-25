@@ -108,3 +108,26 @@ int containsOnlySpaces(const char *str)
     }
     return (0);
 }
+
+char *handle_command(char *com)
+{
+    char *command = NULL;
+    int check_command;
+
+    if (_which(com) == 0)
+    {
+        return (com);
+    }
+    else
+    {
+        command = malloc(sizeof("/bin/") + sizeof(com) + 2);
+        sprintf(command, "%s/%s", "/bin", com);
+        check_command = _which(command);
+        if (check_command == 0)
+        {
+            return (command);
+        }
+    }
+
+    return (NULL);
+}
