@@ -13,7 +13,7 @@ void prompt(char **env)
     while (1)
     {
         if (isatty(STDIN_FILENO))
-            printf("csisfun$ ");
+            write(STDIN_FILENO, "csisfun$ ", 9);
 
         get_line = getline(&input, &n, stdin);
 
@@ -76,9 +76,7 @@ void prompt(char **env)
         {
             wait(&status);
         }
-        free(command);
-        free(input);
-        free(token);
+
         command = NULL;
         token = NULL;
     }
