@@ -46,19 +46,22 @@ void prompt(char **env)
             write(STDERR_FILENO, "\n", 1);
         }
 
-        while (input[i])
-        {
-            if (input[i] == '\n')
-            {
-                input[i] = '\0';
-            }
-            i++;
-        }
+        /*   while (input[i])
+          {
+              if (input[i] == '\n')
+              {
+                  input[i] = '\0';
+              }
+              i++;
+          } */
 
         token = split_string(input, " \t\n");
         command = handle_command(token[0]);
         if (command == NULL)
         {
+            free(command);
+            free(input);
+            free(token);
             perror("error");
         }
 
