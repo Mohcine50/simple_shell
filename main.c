@@ -1,66 +1,45 @@
 #include "shell.h"
 
-int main()
+int main(void)
 {
-
-	char *input = NULL, **tokens = NULL, *command = NULL;
-	int status;
-	ssize_t get_line;
-	size_t n = 0;
+	char *input = NULL, *command = NULL;
+	char **argv = NULL;
+	size_t input_size = 0;
 	pid_t fork_pid;
+	int status, _getline;
 
 	while (1)
 	{
-		print_shell("alx:shell$ ", 11);
-
-		get_line = getline(&input, &n, stdin);
-
-		if (get_line == -1)
-		{
-
-			free(input);
-			exit(0);
-		}
-		if (get_line == 0)
-		{
-			print_shell("\n", 1);
-			exit(1);
-		}
-		tokens = split_string(input, " \t\n");
-		command = handle_command(tokens[0]);
-		if (tokens[0] && strcmp(input, "exit") == 0)
-		{
-			shell_exit(command, input, tokens);
-		}
-		/* if (strcmp(input, "\n") == 0)
+		print_shell("alc@shell$ ", 11);
+		_getline = getline(&input, &input_size, stdin);
+		if (_getline == -1)
 		{
 			free(command);
 			free(input);
-			free(tokens);
-			write(STDERR_FILENO, "\n", 1);
-		} */
+			free(argv);
+			exit(0);
+		}
+		if (_getline == 0)
+			print_shell("\n", 1), exit(1);
+		argv = split_string(input, " \t\n");
 
+		if (argv[0] && strcmp(argv[0], "exit") == 0)
+			shell_exit(command, input, argv);
 		fork_pid = fork();
-
 		if (fork_pid == -1)
 		{
 			perror("error");
 			return (1);
 		}
 		if (fork_pid == 0)
-		{
-			_execve(tokens, command);
-		}
+			_execve(argv, command);
 		else
-		{
 			wait(&status);
-		}
-
 		free(command);
-		free(tokens);
+		free(argv);
+		free(input);
 		command = NULL;
-		tokens = NULL;
+		argv = NULL;
 	}
-
 	return (0);
 }

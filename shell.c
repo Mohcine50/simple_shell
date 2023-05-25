@@ -90,16 +90,16 @@ void print_shell(char *text, int length)
         write(STDERR_FILENO, text, length);
 }
 
-void shell_exit(char *command, char *input, char **tokens)
+void shell_exit(char *command, char *input, char **argv)
 {
     int num_exit = 0;
 
-    if (tokens[1])
-        num_exit = _atoi(tokens[1]);
+    if (argv[1])
+        num_exit = _atoi(argv[1]);
 
     free(command);
     free(input);
-    free(tokens);
+    free(argv);
     exit(num_exit);
 }
 
