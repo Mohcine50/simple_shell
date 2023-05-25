@@ -1,5 +1,9 @@
 #include "shell.h"
 
+/**
+ * main - shell excute point
+ * Return: 0 on success or 1 otherwise
+ */
 int main(void)
 {
 	char *input = NULL, *command = NULL;
