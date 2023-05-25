@@ -27,7 +27,7 @@ void prompt(char **env)
         {
             if (isatty(STDIN_FILENO))
                 write(STDERR_FILENO, "\n", 1);
-            exit(1);
+            exit(0);
         }
 
         if (strcmp(input, "exit\n") == 0)
